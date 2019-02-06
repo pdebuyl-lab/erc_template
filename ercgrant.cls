@@ -31,6 +31,7 @@
 \RequirePackage{pslatex} %Times font
 \RequirePackage{todonotes}
 \RequirePackage{mdframed}
+\RequirePackage{paralist}
 
 % for the open and filled star symbols
 \RequirePackage{bbding}
@@ -68,7 +69,7 @@
 
 % ========== BIBLIOGRAPHY STUFF ============
 
-\RequirePackage{natbib}
+\RequirePackage[sort&compress]{natbib}
 \bibpunct{(}{)}{;}{a}{,}{,}
 \input{abbrev.tex}
 \setlength{\bibsep}{0.0cm}
@@ -79,6 +80,8 @@
 %###
 \titleformat{\section}{\Large\bfseries}{Section \thesection: }{0em}{}
 %###
+
+\setcounter{secnumdepth}{3}
 
 %###
 % have the chapter on the same page
@@ -149,7 +152,7 @@
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt} % Remove line at top
  
-\lhead{\emph{\@author}}
+\lhead{\textit{\thelastname}}
 \chead{Part \thechapter}
 \rhead{\theacro}
 \cfoot{\thepage}
@@ -168,6 +171,9 @@
 \let\@acro\empty
 \newcommand{\acro}[1]{\def\@acro{#1}}
 \newcommand{\theacro}{\textsc{\@acro}\xspace}
+\let\l@stname\empty
+\newcommand{\lastname}[1]{\def\l@astname{#1}}
+\newcommand{\thelastname}{\l@astname}
 \newcommand{\proposal@duration}{60 Months}
 \let\@institution\empty
 \newcommand{\institution}[1]{\def\@institution{#1}}
@@ -177,11 +183,12 @@
 
 % ========= Format title page =========
 
+\newcommand{\callname}{ERC Starting Grant 2016}
 
 \ifisBtwo
 \renewcommand{\maketitle}{%
 \begin{center}
-\LARGE{\textbf{ERC Starting Grant 2016\\
+\LARGE{\textbf{\callname{}\\
 Research proposal [Part B2] }
 }
 \end{center}
@@ -191,7 +198,7 @@ Research proposal [Part B2] }
 \renewcommand{\maketitle}{%
 \begin{center}
 \makeatletter
-\LARGE{\textbf{ERC Starting Grant 2016\\
+\LARGE{\textbf{\callname{}\\
 Research proposal [Part B1] }
 }
 \vfill
@@ -208,7 +215,7 @@ Research proposal [Part B1] }
 %
 \vfill
 %
-\begin{itemize}
+\begin{compactitem}
 \makeatletter
 \item Principal investigator (PI): \@author
 \item Host institution: \@institution
@@ -216,7 +223,7 @@ Research proposal [Part B1] }
 \item Proposal short name: \@acro
 \item Proposal duration: \proposal@duration
 \makeatother
-\end{itemize}
+\end{compactitem}
 \vfill
 }
 \fi
@@ -228,3 +235,24 @@ Research proposal [Part B1] }
 \vfill
 \newpage
 }
+\newcommand{\position}[4]{\item {\bfseries #1} (#3) \hfill #2}
+\newcommand{\education}[5]{\item {\bfseries #1} (#3) with #5 \hfill #2\\
+Thesis: #4}
+
+\@definecounter{c@obj}
+\newcommand{\objective}[2]{\phantomsection%
+  \refstepcounter{c@obj} \def\current@label{OBJ~\thec@obj}%
+  \noindent {\tiny$\blacksquare$}~{\bfseries \textsf{OBJ~\thec@obj}}~#2\par%
+  \label{obj:#1}
+}
+\newcommand{\objref}[1]{{\bfseries \textsf{OBJ~\ref{obj:#1}}}}
+
+\@definecounter{c@task}
+\newcommand{\task}[2]{\phantomsection%
+  \refstepcounter{c@task} \def\current@label{T.~\thec@task}%
+  \noindent {\tiny$\blacksquare$}~{\bfseries \textsf{TASK~\thec@task}}~#2\par%
+  \label{task:#1}
+}
+\newcommand{\taskref}[1]{{\bfseries \textsf{T.\ref{task:#1}}}}
+
+\setdefaultleftmargin{1.5em}{}{}{}{}{}
