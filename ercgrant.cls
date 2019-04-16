@@ -13,7 +13,7 @@
 \ProcessOptions
 
 \LoadClass{scrreprt}
-
+\pdfminorversion=4
 %\ifx\@firstchapter\@empty \addtocounter{chapter}{1}\else\addtocounter{chapter}{\@firstchapter}\fi
 
 \addtocounter{chapter}{1}
